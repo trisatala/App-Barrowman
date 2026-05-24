@@ -57,6 +57,39 @@
         @media (max-width: 900px) {
             .main-content { grid-template-columns: 1fr; }
         }
+
+        /* Kotak Baru untuk Tujuan Penelitian */
+        .research-purpose {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        .research-purpose h2 {
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-size: 20px;
+            text-align: left;
+        }
+
+        .research-purpose ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            font-size: 14px;
+            color: #444;
+            line-height: 1.6;
+        }
+
+        .research-purpose ul li {
+            margin-bottom: 8px;
+        }
+
+        .research-purpose ul li:last-child {
+            margin-bottom: 0;
+        }
         
         .illustration {
             background: #f8fafc;
@@ -66,18 +99,30 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            width: 100%;
         }
         
         .illustration h2 {
             margin-bottom: 15px;
             color: var(--primary);
             font-size: 20px;
+            text-align: center;
         }
         
         svg {
             width: 100%;
             max-width: 520px;
             filter: drop-shadow(10px 15px 20px rgba(0, 102, 204, 0.15));
+        }
+        
+        .illustration-text {
+            margin-top: 15px;
+            font-size: 13px;
+            color: #666;
+            text-align: left;
+            width: 100%;
+            padding: 0 10px;
+            line-height: 1.5;
         }
         
         .input-panel {
@@ -187,10 +232,14 @@
         
         footer {
             text-align: center;
-            padding: 20px;
+            padding: 25px 40px;
             font-size: 13px;
-            color: #666;
+            line-height: 1.7;
+            color: #555;
             background: #f8fafc;
+            border-top: 1px solid #eee;
+            font-family: 'Inter', system-ui, sans-serif;
+            font-weight: 500;
         }
         
         .label-arrow {
@@ -198,77 +247,174 @@
             font-weight: 600;
             fill: #222;
         }
-    </style>
+    
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        border-radius: 14px;
+    }
+
+    header {
+        padding: 22px 18px;
+    }
+
+    h1 {
+        font-size: 22px;
+        line-height: 1.3;
+    }
+
+    .subtitle {
+        font-size: 14px;
+    }
+
+    .main-content {
+        grid-template-columns: 1fr;
+        padding: 18px;
+        gap: 20px;
+    }
+
+    .research-purpose,
+    .illustration,
+    .input-panel {
+        padding: 16px;
+    }
+
+    .research-purpose h2,
+    .illustration h2,
+    .input-panel h2,
+    .result h2 {
+        font-size: 18px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    input,
+    select,
+    button {
+        font-size: 16px;
+    }
+
+    button {
+        padding: 14px 18px;
+    }
+
+    .result-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        font-size: 15px;
+    }
+
+    .value {
+        font-size: 20px;
+    }
+
+    svg {
+        max-width: 100%;
+        height: auto;
+    }
+
+    footer {
+        font-size: 12px;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 20px;
+    }
+
+    .subtitle {
+        font-size: 13px;
+    }
+
+    .label-arrow {
+        font-size: 10px !important;
+    }
+
+    .note,
+    .result-item,
+    p,
+    .research-purpose ul {
+        font-size: 12px !important;
+    }
+
+    .value {
+        font-size: 18px;
+    }
+}
+</style>
 </head>
 <body>    <div class="container">
         <header>
-            <h1>🚀 Analisis  stabilitas roket air (Barrowman)
-            <p class="subtitle">Menggunakan Persamaan Barrowman • Ilustrasi Interaktif untuk Pengukuran Mudah</p>
+            <h1>🚀 Aplikasi Stabilitas Roket Air Barrowman</h1>
+            <p class="subtitle">Menggunakan Persamaan Barrowman • Ilustrasi Interaktif untuk Pengukuran Sederhana</p>
         </header>
         
         <div class="main-content">
-            <!-- ILUSTRASI ROKET AIR -->
-            <div class="illustration">
-                <h2>📏 Ilustrasi Roket Air (Ukuran dalam cm)</h2>
-                <svg id="rocket-svg" width="520" height="420" viewBox="0 0 520 420" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Body tube (badan silinder) -->
-                    <rect x="210" y="130" width="100" height="220" rx="8" ry="8" fill="#00aaff" stroke="#222" stroke-width="12"/>
-                    
-                    <!-- Nose cone (cone/ogive approximation) -->
-                    <polygon points="260,60 210,130 310,130" fill="#ff8800" stroke="#222" stroke-width="12"/>
-                    
-                    <!-- Bottle dome highlight (untuk efek botol air) -->
-                    <ellipse cx="260" cy="105" rx="48" ry="22" fill="#fff" opacity="0.3"/>
-                    
-                    <!-- Fins (3 sirip, tampilkan 2 samping + 1 bawah) -->
-                    <!-- Sirip kiri -->
-                    <polygon points="210,340 140,340 210,290" fill="#ff4400" stroke="#222" stroke-width="10"/>
-                    <!-- Sirip kanan -->
-                    <polygon points="310,340 380,340 310,290" fill="#ff4400" stroke="#222" stroke-width="10"/>
-                    <!-- Sirip bawah (tampak dari samping) -->
-                    <polygon points="235,355 235,380 285,380 285,355" fill="#ff4400" stroke="#222" stroke-width="8" opacity="0.85"/>
-                    
-                    <!-- Label panah -->
-                    <!-- L_n (Panjang Nose) -->
-                    <line x1="260" y1="65" x2="260" y2="125" stroke="#222" stroke-width="3" stroke-dasharray="4,4"/>
-                    <text x="275" y="95" class="label-arrow" font-family="Inter" font-size="13">L_n</text>
-                    <text x="275" y="110" class="label-arrow" font-family="Inter" font-size="11">Panjang Nose</text>
-                    
-                    <!-- L_b (Panjang Badan) -->
-                    <line x1="310" y1="135" x2="310" y2="335" stroke="#222" stroke-width="3" stroke-dasharray="4,4"/>
-                    <text x="325" y="230" class="label-arrow" font-family="Inter" font-size="13">L_b</text>
-                    <text x="325" y="245" class="label-arrow" font-family="Inter" font-size="11">Panjang Badan</text>
-                    
-                    <!-- D (Diameter) -->
-                    <line x1="200" y1="180" x2="200" y2="220" stroke="#222" stroke-width="3"/>
-                    <line x1="320" y1="180" x2="320" y2="220" stroke="#222" stroke-width="3"/>
-                    <text x="165" y="205" class="label-arrow" font-family="Inter" font-size="13">D</text>
-                    
-                    <!-- C_r (Root chord sirip) -->
-                    <line x1="210" y1="315" x2="210" y2="340" stroke="#222" stroke-width="3"/>
-                    <line x1="210" y1="340" x2="140" y2="340" stroke="#222" stroke-width="3"/>
-                    <text x="160" y="355" class="label-arrow" font-family="Inter" font-size="13">C_r</text>
-                    
-                    <!-- C_t (Tip chord sirip) -->
-                    <line x1="140" y1="340" x2="210" y2="290" stroke="#222" stroke-width="2" stroke-dasharray="3,3"/>
-                    <text x="125" y="325" class="label-arrow" font-family="Inter" font-size="13">C_t</text>
-                    
-                    <!-- S (Span sirip) -->
-                    <line x1="210" y1="315" x2="140" y2="315" stroke="#222" stroke-width="3"/>
-                    <text x="170" y="305" class="label-arrow" font-family="Inter" font-size="13">S</text>
-                    
-                    <!-- Keterangan tambahan -->
-                    <text x="20" y="30" font-family="Inter" font-size="14" fill="#0066cc" font-weight="600">Roket Air PET Bottle + Sirip</text>
-                    <text x="20" y="48" font-family="Inter" font-size="12" fill="#555">Sirip dipasang di ujung belakang</text>
-                    <text x="20" y="390" font-family="Inter" font-size="12" fill="#555">Ukur semua dimensi dengan penggaris</text>
-                </svg>
-                <p style="margin-top: 15px; font-size: 13px; color: #666; text-align: center;">
-                    Gambar di atas menunjukkan semua ukuran yang dibutuhkan.<br>
-                    Ukuran dalam <strong>cm</strong>. Sesuaikan input sesuai pengukuran roket Anda.
-                </p>
+            <div>
+                <div class="research-purpose">
+                    <h2>🎯 Tujuan Penelitian</h2>
+                    <ul>
+                        <li>Penelitian ini digunakan untuk menguji pengaruh tekanan udara dan volume air terhadap jarak luncur roket berdasarkan hukum fisika.</li>
+                        <li>Perhitungan menggunakan persamaan Barrowman klasik (1967), dan akurasi cukup akurat pada perhitungan roket air sederhana.</li>
+                    </ul>
+                </div>
+
+                <div class="illustration">
+                    <h2>📏 Ilustrasi Roket Air (Ukuran cm)</h2>
+                    <svg id="rocket-svg" width="520" height="420" viewBox="0 0 520 420" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="210" y="130" width="100" height="220" rx="8" ry="8" fill="#00aaff" stroke="#222" stroke-width="12"/>
+                        
+                        <polygon points="260,60 210,130 310,130" fill="#ff8800" stroke="#222" stroke-width="12"/>
+                        
+                        <ellipse cx="260" cy="105" rx="48" ry="22" fill="#fff" opacity="0.3"/>
+                        
+                        <polygon points="210,340 140,340 210,290" fill="#ff4400" stroke="#222" stroke-width="10"/>
+                        <polygon points="310,340 380,340 310,290" fill="#ff4400" stroke="#222" stroke-width="10"/>
+                        <polygon points="235,355 235,380 285,380 285,355" fill="#ff4400" stroke="#222" stroke-width="8" opacity="0.85"/>
+                        
+                        <line x1="260" y1="65" x2="260" y2="125" stroke="#222" stroke-width="3" stroke-dasharray="4,4"/>
+                        <text x="275" y="95" class="label-arrow" font-family="Inter" font-size="13">L_n</text>
+                        <text x="275" y="110" class="label-arrow" font-family="Inter" font-size="11">Panjang Nose</text>
+                        
+                        <line x1="310" y1="135" x2="310" y2="335" stroke="#222" stroke-width="3" stroke-dasharray="4,4"/>
+                        <text x="325" y="230" class="label-arrow" font-family="Inter" font-size="13">L_b</text>
+                        <text x="325" y="245" class="label-arrow" font-family="Inter" font-size="11">Panjang Badan</text>
+                        
+                        <line x1="200" y1="180" x2="200" y2="220" stroke="#222" stroke-width="3"/>
+                        <line x1="320" y1="180" x2="320" y2="220" stroke="#222" stroke-width="3"/>
+                        <text x="165" y="205" class="label-arrow" font-family="Inter" font-size="13">D</text>
+                        
+                        <line x1="210" y1="315" x2="210" y2="340" stroke="#222" stroke-width="3"/>
+                        <line x1="210" y1="340" x2="140" y2="340" stroke="#222" stroke-width="3"/>
+                        <text x="160" y="355" class="label-arrow" font-family="Inter" font-size="13">C_r</text>
+                        
+                        <line x1="140" y1="340" x2="210" y2="290" stroke="#222" stroke-width="2" stroke-dasharray="3,3"/>
+                        <text x="125" y="325" class="label-arrow" font-family="Inter" font-size="13">C_t</text>
+                        
+                        <line x1="210" y1="315" x2="140" y2="315" stroke="#222" stroke-width="3"/>
+                        <text x="170" y="305" class="label-arrow" font-family="Inter" font-size="13">S</text>
+                        
+                        <text x="20" y="30" font-family="Inter" font-size="14" fill="#0066cc" font-weight="600">Roket Air PET Bottle + Sirip</text>
+                        <text x="20" y="48" font-family="Inter" font-size="12" fill="#555">Sirip dipasang di ujung belakang</text>
+                        <text x="20" y="390" font-family="Inter" font-size="12" fill="#555">Ukur semua dimensi dengan penggaris</text>
+                    </svg>
+                    <div class="illustration-text">
+                        <p><strong>Catatan:</strong></p>
+                        <p>• Gambar di atas menunjukkan semua ukuran yang dibutuhkan.</p>
+                        <p>• Ukuran dalam cm, harap sesuaikan input sesuai pengukuran roket Anda.</p>
+                    </div>
+                </div>
             </div>
             
-            <!-- PANEL INPUT & HASIL -->
             <div>
                 <div class="input-panel">
                     <h2>📋 Masukkan Data Ukuran Roket</h2>
@@ -322,7 +468,6 @@
                     
                     <button onclick="hitungBarrowman()">🚀 Hitung Posisi CP &amp; CG Minimum</button>
                     
-                    <!-- HASIL -->
                     <div class="result" id="result-panel" style="display: none;">
                         <h2>📊 Hasil Perhitungan (Metode Barrowman)</h2>
                         
@@ -349,19 +494,14 @@
                         </div>
                     </div>
                 </div>
-                
-                <p style="text-align:center; margin-top:20px; font-size:13px; color:#777;">
-                    Aplikasi web murni (HTML + JS). Simpan halaman ini sebagai <strong>roket-air-barrowman.html</strong> dan buka di browser kapan saja.<br>
-                    Tidak perlu Python atau server.
-                </p>
             </div>
         </div>
+        
+        <footer>
+            Aplikasi dibuat oleh tim SMPN 13 dalam rangka lomba Olimpiade Penelitian Siswa (OPSI) tahun 2026, Anabel Fidelia Ariwibowo dan Dhia Tsurayya Santoso.
+        </footer>
     </div>
-    
-    <footer>
-       Dibuat oleh oleh tim SMPN 13 dalam rangka lomba Olimpiade Penilitian Siswa (OPSI)2026, Anabel Fidelia Ariwibowo dan Dhia Tsurayya Santoso dengan tujuan untuk menguji pengaruh tekanan udara dan volume air terhadap jarak luncur roket   berdasarkan hukum fisika • Menggunakan persamaan Barrowman klasik (1967) • Akurasi cukup untuk roket air sederhana
-    </footer>
-    
+
     <script>
         function hitungBarrowman() {
             const D = parseFloat(document.getElementById('diameter').value) || 8.5;
@@ -413,14 +553,12 @@
             const inputs = document.querySelectorAll('input, select');
             inputs.forEach(input => {
                 input.addEventListener('input', () => {
-                    // Hitung otomatis hanya jika sudah pernah dihitung
                     if (document.getElementById('result-panel').style.display !== 'none') {
                         hitungBarrowman();
                     }
                 });
             });
             
-            // Hitung pertama kali (contoh default)
             console.log('%c✅ Kalkulator Roket Air Barrowman siap!', 'color:#0066cc;font-weight:700');
         };
     </script>
