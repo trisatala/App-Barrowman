@@ -16,12 +16,24 @@ st.write("---")
 col_kiri, col_kanan = st.columns([1, 1], gap="large")
 
 # =========================================================
-# SISI KIRI: ILUSTRASI & CATATAN
+# SISI KIRI: TUJUAN PENELITIAN & ILUSTRASI
 # =========================================================
 with col_kiri:
+    # --- KOTAK TUJUAN PENELITIAN (Sekarang di paling atas sisi kiri) ---
+    st.markdown("<h3 style='color: #0066cc;'>🎯 Tujuan Penelitian</h3>", unsafe_allow_html=True)
+    st.markdown("""
+    <div style="background-color: #f8fafc; padding: 20px; border-radius: 12px; border-left: 5px solid #0066cc; color: #444; margin-bottom: 25px;">
+        <ul style="margin-bottom: 0; padding-left: 20px;">
+            <li style="margin-bottom: 8px;">Penelitian ini digunakan untuk menguji pengaruh tekanan udara dan volume air terhadap jarak luncur roket berdasarkan hukum fisika.</li>
+            <li>Perhitungan menggunakan persamaan Barrowman klasik (1967), dan akurasi cukup akurat pada perhitungan roket air sederhana.</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # --- ILUSTRASI ROKET AIR ---
     st.markdown("<h3 style='text-align: center; color: #0066cc;'>📏 Ilustrasi Roket Air (Ukuran cm)</h3>", unsafe_allow_html=True)
     
-    # Render SVG Ilustrasi Roket agar tampilan visualnya persis seperti versi HTML asli
+    # Render SVG Ilustrasi Roket
     svg_code = """
     <div style="display: flex; justify-content: center;">
         <svg width="100%" max-width="520px" height="400" viewBox="0 0 520 420" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(10px 15px 20px rgba(0, 102, 204, 0.15));">
@@ -59,7 +71,7 @@ with col_kiri:
     st.info("**Catatan:**\n\n* Gambar di atas menunjukkan semua ukuran yang dibutuhkan.\n* Ukuran dalam **cm**, harap sesuaikan input sesuai pengukuran roket Anda.")
 
 # =========================================================
-# SISI KANAN: PANEL INPUT, LOGIKA BARROWMAN, & TUJUAN
+# SISI KANAN: PANEL INPUT & LOGIKA BARROWMAN
 # =========================================================
 with col_kanan:
     st.markdown("<h3 style='color: #0066cc;'>📋 Masukkan Data Ukuran Roket</h3>", unsafe_allow_html=True)
@@ -80,32 +92,24 @@ with col_kanan:
         S = st.number_input("Rentang Sirip / Span (S) dalam cm", value=10.0, step=0.1, min_value=1.0)
         
     # --- PROSES PERHITUNGAN (LOGIKA BARROWMAN PYTHON) ---
-    # Konfigurasi faktor bentuk hidung roket
     nose_factor = 0.466 if "Ogive" in nose_type else 0.666
     
-    # 1. CN Nose & Titik Pusat Tekanan Nose (Xn)
     CNn = 2.0
     Xn = Ln * nose_factor
     
-    # 2. Gaya Normal Sirip (CNf) menggunakan rumus standar Barrowman
     if Cr > 0 and (1 + Ct / Cr) != 0:
         CNf = num_fins * (4.0 * S * S) / (Cr * (1.0 + Ct / Cr))
     else:
         CNf = 0
         
-    # Posisi ujung depan akar sirip (diukur dari pucuk roket)
     Xb = Ln + Lb - Cr
     
-    # Centroid trapesium sirip (Xfcp)
     if (Cr + Ct) != 0:
         Xfcp = ((Cr + 2.0 * Ct) / (3.0 * (Cr + Ct))) * Cr
     else:
         Xfcp = 0
         
-    # Posisi total CP sirip dari ujung hidung roket
     Xf = Xb + Xfcp
-    
-    # 3. Penggabungan Total Koefisien dan Pusat Tekanan (Xcp)
     totalCN = CNn + CNf
     
     if totalCN != 0:
@@ -113,8 +117,9 @@ with col_kanan:
     else:
         Xcp = 0
         
-    # Menghitung Margin Stabilitas Minimum (1 Kaliber/Diameter di depan CP)
-    CG_min = Xcp - D
+    # Margin Stabilitas
+    num_D = D
+    CG_min = Xcp - num_D
 
     # --- PANEL HASIL ---
     st.write("")
@@ -137,18 +142,6 @@ with col_kanan:
         * Kontribusi aerodinamis bodi silinder diabaikan karena kecil.
         * Margin stabilitas aman = 1 kaliber (D).
         """)
-
-    # --- KOTAK TUJUAN PENELITIAN ---
-    st.write("")
-    st.markdown("<h3 style='color: #0066cc;'>🎯 Tujuan Penelitian</h3>", unsafe_allow_html=True)
-    st.markdown("""
-    <div style="background-color: #f8fafc; padding: 20px; border-radius: 12px; border-left: 5px solid #0066cc; color: #444;">
-        <ul style="margin-bottom: 0; padding-left: 20px;">
-            <li style="margin-bottom: 8px;">Penelitian ini digunakan untuk menguji pengaruh tekanan udara dan volume air terhadap jarak luncur roket berdasarkan hukum fisika.</li>
-            <li>Perhitungan menggunakan persamaan Barrowman klasik (1967), dan akurasi cukup akurat pada perhitungan roket air sederhana.</li>
-        </ul>
-    </div>
-    """, unsafe_allow_html=True)
 
 # --- FOOTER ---
 st.write("")
