@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator CP & CG Minimum Roket Air (Barrowman)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap');
+        
+        :root {
+            --primary: #0066cc;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: linear-gradient(135deg, #f0f4f8, #e6f0fa);
+            padding: 20px;
+            min-height: 100vh;
+            color: #222;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 102, 204, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-top: 8px;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 40px;
+        }
+        
+        @media (max-width: 900px) {
+            .main-content { grid-template-columns: 1fr; }
+        }
+        
+        .illustration {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .illustration h2 {
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-size: 20px;
+        }
+        
+        svg {
+            width: 100%;
+            max-width: 520px;
+            filter: drop-shadow(10px 15px 20px rgba(0, 102, 204, 0.15));
+        }
+        
+        .input-panel {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 25px;
+        }
+        
+        .input-panel h2 {
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-size: 20px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: #444;
+        }
+        
+        input, select {
+            padding: 12px 16px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.15);
+        }
+        
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 14px;
+            border: 3px solid var(--primary);
+            box-shadow: 0 8px 20px rgba(0, 102, 204, 0.1);
+        }
+        
+        .result h2 {
+            color: var(--primary);
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 17px;
+        }
+        
+        .result-item:last-child { border-bottom: none; }
+        
+        .value {
+            font-weight: 700;
+            font-size: 22px;
+            color: #0066cc;
+        }
+        
+        .note {
+            font-size: 13px;
+            background: #fff3cd;
+            color: #856404;
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 15px;
+            line-height: 1.4;
+        }
+        
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: #0055aa;
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #666;
+            background: #f8fafc;
+        }
+        
+        .label-arrow {
+            font-size: 12px;
+            font-weight: 600;
+            fill: #222;
+        }
+    </style>
+</head>
+<body>    <div class="container">
+        <header>
+            <h1>🚀 Analisis  stabilitas roket air (Barrowman)
+            <p class="subtitle">Menggunakan Persamaan Barrowman • Ilustrasi Interaktif untuk Pengukuran Mudah</p>
+        </header>
+        
+        <div class="main-content">
+            <!-- ILUSTRASI ROKET AIR -->
+            <div class="illustration">
+                <h2>📏 Ilustrasi Roket Air (Ukuran dalam cm)</h2>
+                <svg id="rocket-svg" width="520" height="420" viewBox="0 0 520 420" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Body tube (badan silinder) -->
+                    <rect x="210" y="130" width="100" height="220" rx="8" ry="8" fill="#00aaff" stroke="#222" stroke-width="12"/>
+                    
+                    <!-- Nose cone (cone/ogive approximation) -->
+                    <polygon points="260,60 210,130 310,130" fill="#ff8800" stroke="#222" stroke-width="12"/>
+                    
+                    <!-- Bottle dome highlight (untuk efek botol air) -->
+                    <ellipse cx="260" cy="105" rx="48" ry="22" fill="#fff" opacity="0.3"/>
+                    
+                    <!-- Fins (3 sirip, tampilkan 2 samping + 1 bawah) -->
+                    <!-- Sirip kiri -->
+                    <polygon points="210,340 140,340 210,290" fill="#ff4400" stroke="#222" stroke-width="10"/>
+                    <!-- Sirip kanan -->
+                    <polygon points="310,340 380,340 310,290" fill="#ff4400" stroke="#222" stroke-width="10"/>
+                    <!-- Sirip bawah (tampak dari samping) -->
+                    <polygon points="235,355 235,380 285,380 285,355" fill="#ff4400" stroke="#222" stroke-width="8" opacity="0.85"/>
+                    
+                    <!-- Label panah -->
+                    <!-- L_n (Panjang Nose) -->
+                    <line x1="260" y1="65" x2="260" y2="125" stroke="#222" stroke-width="3" stroke-dasharray="4,4"/>
+                    <text x="275" y="95" class="label-arrow" font-family="Inter" font-size="13">L_n</text>
+                    <text x="275" y="110" class="label-arrow" font-family="Inter" font-size="11">Panjang Nose</text>
+                    
+                    <!-- L_b (Panjang Badan) -->
+                    <line x1="310" y1="135" x2="310" y2="335" stroke="#222" stroke-width="3" stroke-dasharray="4,4"/>
+                    <text x="325" y="230" class="label-arrow" font-family="Inter" font-size="13">L_b</text>
+                    <text x="325" y="245" class="label-arrow" font-family="Inter" font-size="11">Panjang Badan</text>
+                    
+                    <!-- D (Diameter) -->
+                    <line x1="200" y1="180" x2="200" y2="220" stroke="#222" stroke-width="3"/>
+                    <line x1="320" y1="180" x2="320" y2="220" stroke="#222" stroke-width="3"/>
+                    <text x="165" y="205" class="label-arrow" font-family="Inter" font-size="13">D</text>
+                    
+                    <!-- C_r (Root chord sirip) -->
+                    <line x1="210" y1="315" x2="210" y2="340" stroke="#222" stroke-width="3"/>
+                    <line x1="210" y1="340" x2="140" y2="340" stroke="#222" stroke-width="3"/>
+                    <text x="160" y="355" class="label-arrow" font-family="Inter" font-size="13">C_r</text>
+                    
+                    <!-- C_t (Tip chord sirip) -->
+                    <line x1="140" y1="340" x2="210" y2="290" stroke="#222" stroke-width="2" stroke-dasharray="3,3"/>
+                    <text x="125" y="325" class="label-arrow" font-family="Inter" font-size="13">C_t</text>
+                    
+                    <!-- S (Span sirip) -->
+                    <line x1="210" y1="315" x2="140" y2="315" stroke="#222" stroke-width="3"/>
+                    <text x="170" y="305" class="label-arrow" font-family="Inter" font-size="13">S</text>
+                    
+                    <!-- Keterangan tambahan -->
+                    <text x="20" y="30" font-family="Inter" font-size="14" fill="#0066cc" font-weight="600">Roket Air PET Bottle + Sirip</text>
+                    <text x="20" y="48" font-family="Inter" font-size="12" fill="#555">Sirip dipasang di ujung belakang</text>
+                    <text x="20" y="390" font-family="Inter" font-size="12" fill="#555">Ukur semua dimensi dengan penggaris</text>
+                </svg>
+                <p style="margin-top: 15px; font-size: 13px; color: #666; text-align: center;">
+                    Gambar di atas menunjukkan semua ukuran yang dibutuhkan.<br>
+                    Ukuran dalam <strong>cm</strong>. Sesuaikan input sesuai pengukuran roket Anda.
+                </p>
+            </div>
+            
+            <!-- PANEL INPUT & HASIL -->
+            <div>
+                <div class="input-panel">
+                    <h2>📋 Masukkan Data Ukuran Roket</h2>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Diameter Badan (D) <span style="color:#888;font-size:12px;">cm</span></label>
+                            <input type="number" id="diameter" value="8.5" step="0.1" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label>Panjang Nose (L_n) <span style="color:#888;font-size:12px;">cm</span></label>
+                            <input type="number" id="nose_length" value="15" step="0.1" min="1">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Tipe Nose</label>
+                            <select id="nose_type">
+                                <option value="cone">Cone (Kerucut)</option>
+                                <option value="ogive" selected>Ogive (Bulat seperti botol PET)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Panjang Badan (L_b) <span style="color:#888;font-size:12px;">cm</span></label>
+                            <input type="number" id="body_length" value="28" step="0.1" min="1">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Jumlah Sirip (N)</label>
+                            <select id="num_fins">
+                                <option value="3">3 Sirip</option>
+                                <option value="4" selected>4 Sirip</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Panjang Akar Sirip (C_r) <span style="color:#888;font-size:12px;">cm</span></label>
+                            <input type="number" id="fin_root" value="12" step="0.1" min="1">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Panjang Ujung Sirip (C_t) <span style="color:#888;font-size:12px;">cm</span></label>
+                            <input type="number" id="fin_tip" value="4" step="0.1" min="0">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Rentang Sirip / Span (S) <span style="color:#888;font-size:12px;">cm</span></label>
+                            <input type="number" id="fin_span" value="10" step="0.1" min="1">
+                        </div>
+                    </div>
+                    
+                    <button onclick="hitungBarrowman()">🚀 Hitung Posisi CP &amp; CG Minimum</button>
+                    
+                    <!-- HASIL -->
+                    <div class="result" id="result-panel" style="display: none;">
+                        <h2>📊 Hasil Perhitungan (Metode Barrowman)</h2>
+                        
+                        <div class="result-item">
+                            <span>Posisi <strong>CP</strong> dari ujung nose</span>
+                            <span class="value" id="cp-value">— cm</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Posisi <strong>CG Minimum</strong> (stabilitas 1 kaliber)</span>
+                            <span class="value" id="cgmin-value">— cm</span>
+                        </div>
+                        
+                        <div style="margin-top: 15px; padding: 12px; background: #e6f0ff; border-radius: 10px; font-size: 14px;">
+                            ✅ <strong>Stabilitas baik</strong> jika posisi CG roket Anda <span style="font-weight:700;color:#0066cc;">lebih kecil</span> dari posisi CG Minimum.<br>
+                            (CG harus berada di depan CP minimal 1× diameter badan)
+                        </div>
+                        
+                        <div class="note">
+                            <strong>Catatan Barrowman:</strong> Perhitungan ini berlaku untuk aliran subsonik &amp; sudut serang kecil.<br>
+                            • CN_nose = 2<br>
+                            • CN_fins = N × 4S² / [C_r × (1 + C_t/C_r)]<br>
+                            • Body diabaikan (kontribusi kecil)<br>
+                            • Margin stabilitas = 1 kaliber (D)
+                        </div>
+                    </div>
+                </div>
+                
+                <p style="text-align:center; margin-top:20px; font-size:13px; color:#777;">
+                    Aplikasi web murni (HTML + JS). Simpan halaman ini sebagai <strong>roket-air-barrowman.html</strong> dan buka di browser kapan saja.<br>
+                    Tidak perlu Python atau server.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+       Dibuat oleh oleh tim SMPN 13 dalam rangka lomba Olimpiade Penilitian Siswa (OPSI)2026, Anabel Fidelia Ariwibowo dan Dhia Tsurayya Santoso dengan tujuan untuk menguji pengaruh tekanan udara dan volume air terhadap jarak luncur roket   berdasarkan hukum fisika • Menggunakan persamaan Barrowman klasik (1967) • Akurasi cukup untuk roket air sederhana
+    </footer>
+    
+    <script>
+        function hitungBarrowman() {
+            const D = parseFloat(document.getElementById('diameter').value) || 8.5;
+            const Ln = parseFloat(document.getElementById('nose_length').value) || 15;
+            const Lb = parseFloat(document.getElementById('body_length').value) || 28;
+            const noseType = document.getElementById('nose_type').value;
+            const N = parseInt(document.getElementById('num_fins').value) || 4;
+            const Cr = parseFloat(document.getElementById('fin_root').value) || 12;
+            const Ct = parseFloat(document.getElementById('fin_tip').value) || 4;
+            const S = parseFloat(document.getElementById('fin_span').value) || 10;
+            
+            // Nose factor (Barrowman)
+            const noseFactor = noseType === 'cone' ? 0.666 : 0.466;
+            
+            // CN_nose
+            const CNn = 2;
+            const Xn = Ln * noseFactor;
+            
+            // Fins (Barrowman standard)
+            const CNf = N * (4 * S * S) / (Cr * (1 + Ct / Cr));
+            
+            // Posisi leading edge sirip root (sirip di ujung belakang)
+            const Xb = Ln + Lb - Cr;
+            
+            // CP fin dari leading edge root (centroid trapezoid)
+            const Xfcp = (Cr + 2 * Ct) / (3 * (Cr + Ct)) * Cr;
+            
+            // Posisi CP fins dari ujung nose
+            const Xf = Xb + Xfcp;
+            
+            // Total CN dan Xcp
+            const totalCN = CNn + CNf;
+            const Xcp = (CNn * Xn + CNf * Xf) / totalCN;
+            
+            // CG Minimum = CP - 1 kaliber (D) untuk margin stabilitas
+            const CG_min = Xcp - D;
+            
+            // Tampilkan hasil
+            document.getElementById('result-panel').style.display = 'block';
+            document.getElementById('cp-value').textContent = Xcp.toFixed(2) + ' cm';
+            document.getElementById('cgmin-value').textContent = CG_min.toFixed(2) + ' cm';
+            
+            // Scroll ke hasil
+            document.getElementById('result-panel').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Hitung otomatis saat input berubah
+        window.onload = function() {
+            const inputs = document.querySelectorAll('input, select');
+            inputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    // Hitung otomatis hanya jika sudah pernah dihitung
+                    if (document.getElementById('result-panel').style.display !== 'none') {
+                        hitungBarrowman();
+                    }
+                });
+            });
+            
+            // Hitung pertama kali (contoh default)
+            console.log('%c✅ Kalkulator Roket Air Barrowman siap!', 'color:#0066cc;font-weight:700');
+        };
+    </script>
+</body>
+</html>
