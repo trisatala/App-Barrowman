@@ -16,10 +16,10 @@ st.write("---")
 col_kiri, col_kanan = st.columns([1, 1], gap="large")
 
 # =========================================================
-# SISI KIRI: TUJUAN PENELITIAN & ILUSTRASI
+# SISI KIRI: TUJUAN APLIKASI & ILUSTRASI
 # =========================================================
 with col_kiri:
-    # --- KOTAK TUJUAN PENELITIAN (Sekarang di paling atas sisi kiri) ---
+    # --- KOTAK TUJUAN APLIKASI (Sekarang di paling atas sisi kiri) ---
     st.markdown("<h3 style='color: #0066cc;'>🎯 Tujuan Penelitian</h3>", unsafe_allow_html=True)
     st.markdown("""
     <div style="background-color: #f8fafc; padding: 20px; border-radius: 12px; border-left: 5px solid #0066cc; color: #444; margin-bottom: 25px;">
@@ -146,4 +146,4 @@ with col_kanan:
 # --- FOOTER ---
 st.write("")
 st.write("")
-st.markdown("<p style='text-align: center; color: #555; font-size: 13px; border-top: 1px solid #eee; padding-top: 20px;'>Aplikasi dibuat oleh tim SMPN 13 dalam rangka lomba Olimpiade Penelitian Siswa (OPSI) tahun 2026, Anabel Fidelia Ariwibowo dan Dhia Tsurayya Santoso.</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #555; font-size: 13px; border-top: 1px solid #eee; padding-top: 20px;'>Aplikasi dibuat oleh tim SMPN 13 dalam rangka lomba Olimpiade Penelitian Siswa Yogyakarta (OPSY) tahun 2026, Anabel Fidelia Ariwibowo dan Dhia Tsurayya Santoso.</p>", unsafe_allow_html=True)
